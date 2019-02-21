@@ -24,7 +24,7 @@ export const PAPERS: Paper[] = [
                 {
                     id: 1,
                     name: "University of Utopia",
-                    author_id: [1]
+                    author_id: [1,2]
                 },
 
                 {

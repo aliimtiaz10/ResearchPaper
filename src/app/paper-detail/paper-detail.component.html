@@ -11,7 +11,12 @@
     <div>
         <label> Authors:
           <ul> 
-            <li *ngFor = "let author of paper.authors"> <span>{{author.id}} </span> {{author.name}}</li>
+            <li *ngFor = "let author of paper.authors"> <span>{{author.id}} </span> {{author.name}}
+                <ul>
+                  <li *ngFor= "let value of keyMap.get(author.id)" >  {{value}} </li>
+                </ul>
+            
+            </li>
           </ul>
         </label>
       </div>
