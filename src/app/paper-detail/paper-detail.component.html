@@ -1,0 +1,28 @@
+<div *ngIf="paper">
+
+    <h2>{{paper.title | uppercase}} Details</h2>
+    <div><span>id: </span>{{paper.id}}</div>
+    <div>
+      <label>title:
+        <input [(ngModel)]="paper.title" placeholder="title"/>
+      </label>
+    </div>
+
+    <div>
+        <label> Authors:
+          <ul> 
+            <li *ngFor = "let author of paper.authors"> <span>{{author.id}} </span> {{author.name}}</li>
+          </ul>
+        </label>
+      </div>
+
+      <div>
+          <label> Affiliations:
+            <ul> 
+              <li *ngFor = "let affiliation of paper.affiliations"> <span>{{affiliation.id}} </span> {{affiliation.name}}</li>
+            </ul>
+          </label>
+        </div>
+    
+  
+  </div>

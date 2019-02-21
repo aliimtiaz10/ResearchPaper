@@ -1,0 +1,14 @@
+<h2>Papers</h2>
+
+<ul>
+  <li *ngFor="let paper of papers">
+    <span>{{paper.id}}</span> {{paper.title}} <span><button (click)="onSelect(paper)">
+        View Paper
+
+      </button> </span>
+  </li>
+</ul>
+
+<button> Add new Paper</button>
+
+<app-paper-detail [paper]="selectedPaper"></app-paper-detail>

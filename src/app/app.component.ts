@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {LocalStorageService} from './local-storage.service'
+import {LocalStorageService} from './local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,7 @@ import {LocalStorageService} from './local-storage.service'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'research-paper';
+  title = 'Research Paper';
 
   public constructor (localStorageService : LocalStorageService ){
 
