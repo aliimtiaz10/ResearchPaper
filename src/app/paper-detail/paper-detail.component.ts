@@ -11,6 +11,20 @@ export class PaperDetailComponent implements OnInit,OnChanges {
   @Input() paper: Paper;
   keyMap : Map<number,number[]> = new Map<number,number[]>();
   ngOnChanges(): void {
+
+   // debugger
+    // if(this.paper!=null){
+    //   console.log( " NG ON CHANGES "+JSON.stringify(this.paper))
+    //   this.paper.authors.forEach(author => {
+    //     this.paper.affiliations.forEach(affiliation => {
+    //       let abcList : number[] = affiliation.author_id.filter(authID => authID == author.id);
+    //       console.log("PUSING "+author.id +"  "+JSON.stringify(abcList))
+    //       this.keyMap.set(author.id,abcList);
+    //     })
+    //   })
+  
+    // }
+
     // if(this.paper!=null){
     //   console.log( " NG ON CHANGES "+JSON.stringify(this.paper))
     //   this.paper.authors.forEach(author => {
@@ -28,18 +42,32 @@ export class PaperDetailComponent implements OnInit,OnChanges {
   constructor() { }
 
   ngOnInit() {
-
     if(this.paper!=null){
-      console.log( " NG ON CHANGES "+JSON.stringify(this.paper))
       this.paper.authors.forEach(author => {
+        let affiliationsID :Array<number> =[];
         this.paper.affiliations.forEach(affiliation => {
-          let abcList : number[] = affiliation.author_id.filter(authID => authID === author.id)
-          console.log("PUSING "+author.id +"  "+abcList)
-          this.keyMap.set(author.id,abcList);
+          let matchList : number[] = affiliation.author_id.filter(authID => authID == author.id)
+          if(matchList.length>0){
+          affiliationsID.push(affiliation.id);
+          console.log("PUSING "+author.id +"  "+JSON.stringify(affiliationsID))
+          this.keyMap.set(author.id,affiliationsID);
+          }
         })
       })
   
     }
+
+    // if(this.paper!=null){
+    //   console.log( " NG ON CHANGES "+JSON.stringify(this.paper))
+    //   this.paper.authors.forEach(author => {
+    //     this.paper.affiliations.forEach(affiliation => {
+    //       let abcList : number[] = affiliation.author_id.filter(authID => authID == author.id)
+    //       console.log("PUSING "+author.id +"  "+JSON.stringify(abcList))
+    //       this.keyMap.set(author.id,abcList);
+    //     })
+    //   })
+  
+    // }
   }
 
 }

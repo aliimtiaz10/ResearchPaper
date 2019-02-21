@@ -11,4 +11,4 @@
 
 <button> Add new Paper</button>
 
-<app-paper-detail [paper]="selectedPaper"></app-paper-detail>
+<app-paper-detail *ngIf = "selectedPaper" [paper]="selectedPaper"></app-paper-detail>
