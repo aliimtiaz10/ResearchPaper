@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Paper } from '../model/Paper';
 
 
@@ -7,67 +7,38 @@ import { Paper } from '../model/Paper';
   templateUrl: './paper-detail.component.html',
   styleUrls: ['./paper-detail.component.css']
 })
-export class PaperDetailComponent implements OnInit,OnChanges {
+export class PaperDetailComponent implements OnInit, OnChanges {
   @Input() paper: Paper;
-  keyMap : Map<number,number[]> = new Map<number,number[]>();
+  keyMap: Map<number, number[]> = new Map<number, number[]>();
   ngOnChanges(): void {
-
-   // debugger
-    // if(this.paper!=null){
-    //   console.log( " NG ON CHANGES "+JSON.stringify(this.paper))
-    //   this.paper.authors.forEach(author => {
-    //     this.paper.affiliations.forEach(affiliation => {
-    //       let abcList : number[] = affiliation.author_id.filter(authID => authID == author.id);
-    //       console.log("PUSING "+author.id +"  "+JSON.stringify(abcList))
-    //       this.keyMap.set(author.id,abcList);
-    //     })
-    //   })
-  
-    // }
-
-    // if(this.paper!=null){
-    //   console.log( " NG ON CHANGES "+JSON.stringify(this.paper))
-    //   this.paper.authors.forEach(author => {
-    //     this.paper.affiliations.forEach(affiliation => {
-    //       let abcList : number[] = affiliation.author_id.filter(authID => authID === author.id)
-    //       console.log("PUSING "+author.id +"  "+abcList)
-    //       this.keyMap.set(author.id,abcList);
-    //     })
-    //   })
-  
-    // }
   }
 
-  
+
   constructor() { }
 
   ngOnInit() {
-    if(this.paper!=null){
+    if (this.paper != null) {
       this.paper.authors.forEach(author => {
-        let affiliationsID :Array<number> =[];
+        let affiliationsIDList: Array<number> = [];
         this.paper.affiliations.forEach(affiliation => {
-          let matchList : number[] = affiliation.author_id.filter(authID => authID == author.id)
-          if(matchList.length>0){
-          affiliationsID.push(affiliation.id);
-          console.log("PUSING "+author.id +"  "+JSON.stringify(affiliationsID))
-          this.keyMap.set(author.id,affiliationsID);
+          let matchList: number[] = affiliation.author_id.filter(authID => authID == author.id)
+          if (matchList.length > 0) {
+            affiliationsIDList.push(affiliation.id);
+            console.log("PUSING " + author.id + "  " + JSON.stringify(affiliationsIDList))
+            this.keyMap.set(author.id, affiliationsIDList);
           }
         })
       })
-  
-    }
 
-    // if(this.paper!=null){
-    //   console.log( " NG ON CHANGES "+JSON.stringify(this.paper))
-    //   this.paper.authors.forEach(author => {
-    //     this.paper.affiliations.forEach(affiliation => {
-    //       let abcList : number[] = affiliation.author_id.filter(authID => authID == author.id)
-    //       console.log("PUSING "+author.id +"  "+JSON.stringify(abcList))
-    //       this.keyMap.set(author.id,abcList);
-    //     })
-    //   })
-  
-    // }
+    }
+  }
+
+  sortByID(a, b) {
+    if (a.id < b.id)
+      return -1;
+    if (a.id > b.id)
+      return 1;
+    return 0;
   }
 
 }

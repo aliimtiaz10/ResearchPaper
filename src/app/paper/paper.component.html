@@ -1,7 +1,7 @@
 <h2>Papers</h2>
 
 <ul>
-  <li *ngFor="let paper of papers">
+  <li *ngFor="let paper of papers.sort(sortByID)">
     <span>{{paper.id}}</span> {{paper.title}} <span><button (click)="onSelect(paper)">
         View Paper
 
