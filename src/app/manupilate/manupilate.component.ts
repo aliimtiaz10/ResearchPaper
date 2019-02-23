@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, NG_VALIDATORS } from '@angular/forms';
 import {PAPERS} from '../mock-papers'
 import { Paper } from '../model/Paper';
 
@@ -12,6 +12,19 @@ export class ManupilateComponent implements OnInit {
 
   //constructor() { }
   //paper:Paper = PAPERS[0];
+
+   xyzlist = [
+    {
+      id: 1,
+      value: 'option1'
+    },
+    {
+      id: 2,
+      value: 'option2'
+    }
+  ];
+
+  checkedList: any[] = [];
 
   ngOnInit() {
   }
@@ -29,9 +42,8 @@ export class ManupilateComponent implements OnInit {
         ], affiliations: [
           {
               id: 1,
-              name: "University of Utopia"
-              ,
-             author_id: [1]
+              name: "University of Utopia",
+              author_id: [1]
           }]
       }
     ]
@@ -76,7 +88,7 @@ export class ManupilateComponent implements OnInit {
 
   deleteAuthor(control, index) {
     control.removeAt(index);
-    //add remove logic for dependent organization references as well
+    //TODO : add remove logic for dependent organization references as well
   }
   addNewAffiliation(control) {
     control.push(
@@ -120,8 +132,18 @@ export class ManupilateComponent implements OnInit {
     x.affiliations.forEach(y => {
       arr.push(this.fb.group({
         id:y.id, 
-        name: y.name 
+        name: y.name,
+        author_id : this.setauthorAffiliations(y) 
       }))
+    })
+    return arr;
+  }
+
+  setauthorAffiliations(y) {
+    let arr = new FormArray([])
+    console.log(JSON.stringify(y));
+    y.author_id.forEach(z => {
+      arr.push(this.fb.control([z]))
     })
     return arr;
   }
@@ -129,6 +151,21 @@ export class ManupilateComponent implements OnInit {
   genId(data: any[]): number {
     return data.length > 0 ? Math.max(...data.map(x => x.id)) + 1 : 1;
   }
+
+
+  onCheckboxChange(option, event,affID,control) {
+    if(event.target.checked) {
+      console.log(JSON.stringify(this.myForm.value))
+      this.checkedList.push(option.id);
+    } else {
+      for(var i=0 ; i < this.xyzlist.length; i++) {
+        if(this.checkedList[i] == option.id){
+          this.checkedList.splice(i,1);
+        }
+      }
+    }
+    console.log(this.checkedList);
+    }
 }
 
 
