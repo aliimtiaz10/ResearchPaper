@@ -1,0 +1,55 @@
+<h1>Manuipilate Paper</h1>
+
+<button (click)="addNewPaper()">Add new Paper</button><br><br>
+<form [formGroup]="myForm">
+  <div formArrayName="papers">
+    <div *ngFor="let comp of myForm.get('papers').controls; let i=index">
+    <fieldset>
+      <legend><h3>Paper {{i+1}}: </h3></legend>
+      <div [formGroupName]="i">
+        <div><label>Paper ID:  {{i+1}}: </label></div>
+        <label>Paper Name: </label>
+        <input formControlName="title" /><span><button (click)="deletePaper(i)">Delete Paper</button></span>
+        <div formArrayName="authors">
+          <div *ngFor="let project of comp.get('authors').controls; let j=index">
+            <fieldset>
+            <legend><h4>Author {{j+1}}</h4></legend>
+            <div [formGroupName]="j">
+              <label>Author Name:</label>
+              <input formControlName="name" /><span><button (click)="deleteAuthor(comp.controls.authors, j)">Delete Author</button></span>
+            </div>
+            </fieldset>
+          </div>
+          <button (click)="addNewAuthor(comp.controls.authors)">Add new Author</button>
+        </div>
+        <div formArrayName="affiliations">
+            <div *ngFor="let affiliation of comp.get('affiliations').controls; let k=index">
+              <fieldset>
+              <legend><h4>Affiliation {{k+1}}</h4></legend>
+              <div [formGroupName]="k">
+                <label>Affiliation Name:</label>
+                <input formControlName="name" /><span><button (click)="deleteAffiliation(comp.controls.affiliations, k)">Delete Affiliation</button></span>
+              </div>
+              </fieldset>
+            </div>
+            <!-- <div formArrayName="author_id">
+                <div *ngFor="let aid of affiliation.get('author_id').controls; let l=index">
+                  <fieldset>
+                  <legend><h4>Author ID {{l+1}}</h4></legend>
+                  <div [formGroupName]="l">
+                    <label>Auth Name:</label>
+                    <input formControlName="author" type="checkbox" />
+                  </div>
+                  </fieldset>
+                </div>
+              </div> -->
+            <button (click)="addNewAffiliation(comp.controls.affiliations)">Add new Affiliation</button>
+          </div>
+      </div>
+    </fieldset>
+    </div>
+  </div><br>
+  
+</form>
+
+<pre>{{myForm.value | json}}</pre>
