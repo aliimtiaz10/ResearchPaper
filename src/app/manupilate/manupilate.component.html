@@ -1,6 +1,6 @@
 <h1>Manupilate Paper</h1>
 
-<button (click)="addNewPaper()">Add new Paper</button><br><br>
+<!-- <button (click)="addNewPaper()">Add new Paper</button><br><br> -->
 <form [formGroup]="myForm">
   <div formArrayName="papers">
     <div *ngFor="let comp of myForm.get('papers').controls; let i=index">

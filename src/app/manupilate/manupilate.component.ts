@@ -13,18 +13,8 @@ export class ManupilateComponent implements OnInit {
   //constructor() { }
   //paper:Paper = PAPERS[0];
 
-   xyzlist = [
-    {
-      id: 1,
-      value: 'option1'
-    },
-    {
-      id: 2,
-      value: 'option2'
-    }
-  ];
+  keyMap: Map<number, number[]> = new Map<number, number[]>();
 
-  checkedList: any[] = [];
 
   ngOnInit() {
   }
@@ -155,16 +145,27 @@ export class ManupilateComponent implements OnInit {
 
   onCheckboxChange(option, event,affID,control) {
     if(event.target.checked) {
-      console.log(JSON.stringify(this.myForm.value))
-      this.checkedList.push(option.id);
+      let authAffList :any[] = this.keyMap.get(affID);
+      if(authAffList!=null){
+      authAffList.push(option.id);
+      this.keyMap.set(affID,authAffList)
+      } else{
+        let newAuthAffList :any[] =[];
+        newAuthAffList.push(option.id);
+        this.keyMap.set(affID,newAuthAffList)
+      }
     } else {
-      for(var i=0 ; i < this.xyzlist.length; i++) {
-        if(this.checkedList[i] == option.id){
-          this.checkedList.splice(i,1);
+      let authAffList :any[] = this.keyMap.get(affID);
+      for(var i=0 ; i < authAffList.length; i++) {
+        if(authAffList[i] == option.id){
+          authAffList.splice(i,1);
         }
       }
+      this.keyMap.set(affID,authAffList);
     }
-    console.log(this.checkedList);
+    console.log("affID "+affID+ "   "+this.keyMap.get(affID));
+
+    //TODO : append this result to formControl for final JSON
     }
 }
 
