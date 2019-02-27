@@ -92,7 +92,6 @@ export class ManupilateComponent implements OnInit {
 
   deleteAffiliation(control, index) {
     control.removeAt(index);
-    //add remove logic for dependent organization references as well
   }
 
   setpapers() {
@@ -154,7 +153,7 @@ export class ManupilateComponent implements OnInit {
         newAuthAffList.push(option.id);
         this.keyMap.set(affID,newAuthAffList)
       }
-    } else {
+    } else {  
       let authAffList :any[] = this.keyMap.get(affID);
       for(var i=0 ; i < authAffList.length; i++) {
         if(authAffList[i] == option.id){
