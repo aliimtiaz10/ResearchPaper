@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, NG_VALIDATORS } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, NG_VALIDATORS, Validators, FormControl } from '@angular/forms';
 import {PAPERS} from '../mock-papers'
 import { Paper } from '../model/Paper';
 
@@ -39,10 +39,10 @@ export class ManupilateComponent implements OnInit {
     ]
   }
 
-  myForm: FormGroup;
+  paperForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.myForm = this.fb.group({
+    this.paperForm = this.fb.group({
       papers: this.fb.array([])
     })
 
@@ -50,11 +50,11 @@ export class ManupilateComponent implements OnInit {
   }
 
   addNewPaper() {
-    let control = <FormArray>this.myForm.controls.papers;
+    let control = <FormArray>this.paperForm.controls.papers;
     control.push(
       this.fb.group({
-        title: [''],
-        id: control.length+1,
+        title: ['',Validators.required],
+        id: [control.length+1,Validators.required],
         authors: this.fb.array([]),
         affiliations: this.fb.array([])
       })
@@ -62,15 +62,15 @@ export class ManupilateComponent implements OnInit {
   }
 
   deletePaper(index) {
-    let control = <FormArray>this.myForm.controls.papers;
+    let control = <FormArray>this.paperForm.controls.papers;
     control.removeAt(index)
   }
 
   addNewAuthor(control) {
     control.push(
       this.fb.group({
-        name: [''],
-        id : control.length+1
+        name: ['',Validators.required],
+        id : [control.length+1,Validators.required]
       
       
       }))
@@ -83,8 +83,8 @@ export class ManupilateComponent implements OnInit {
   addNewAffiliation(control) {
     control.push(
       this.fb.group({
-        name: [''],
-        id : control.length+1
+        name: ['',Validators.required],
+        id : [control.length+1,Validators.required]
       
       
       }))
@@ -95,11 +95,11 @@ export class ManupilateComponent implements OnInit {
   }
 
   setpapers() {
-    let control = <FormArray>this.myForm.controls.papers;
+    let control = <FormArray>this.paperForm.controls.papers;
     this.data.papers.forEach(x => {
       control.push(this.fb.group({
-        id:x.id, 
-        title: x.title, 
+        id:[x.id,Validators.required], 
+        title: [x.title,Validators.required], 
         authors: this.setauthors(x),
         affiliations: this.setaffiliations(x) }))
     })
@@ -109,8 +109,8 @@ export class ManupilateComponent implements OnInit {
     let arr = new FormArray([])
     x.authors.forEach(y => {
       arr.push(this.fb.group({
-        id:y.id, 
-        name: y.name 
+        id:[y.id,Validators.required], 
+        name: [y.name,Validators.required] 
       }))
     })
     return arr;
@@ -120,8 +120,8 @@ export class ManupilateComponent implements OnInit {
     let arr = new FormArray([])
     x.affiliations.forEach(y => {
       arr.push(this.fb.group({
-        id:y.id, 
-        name: y.name,
+        id:[y.id,Validators.required], 
+        name: [y.name,Validators.required],
         author_id : this.setauthorAffiliations(y) 
       }))
     })
@@ -166,6 +166,13 @@ export class ManupilateComponent implements OnInit {
 
     //TODO : append this result to formControl for final JSON
     }
+
+    onSubmit() {
+      //TODO : add to local storage
+      console.warn(JSON.stringify(this.paperForm.value));
+    }
+
+
 }
 
 
